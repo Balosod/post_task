@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, constr
 
 
 class PostBase(BaseModel):
@@ -6,15 +6,19 @@ class PostBase(BaseModel):
     description: str | None = None
 
 
-class PostCreate(PostBase):
-    pass
+class PostCreate(BaseModel):
+    # Check the payload size
+    title: constr(max_length=1024 * 1024)
+    description: constr(max_length=1024 * 1024)
 
 
 class DeletePost(BaseModel):
-    id :int
+    id: int
+
 
 class ReturnPost(BaseModel):
-    id :int
+    id: int
+
 
 class Post(PostBase):
     id: int
